@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "standard_bucket" {
   }
 
   logging {
-    target_bucket = "${var.bucket_name}"
+    target_bucket = var.bucket_name
     target_prefix = "log/"
   }
 }
