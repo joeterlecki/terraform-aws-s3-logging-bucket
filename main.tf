@@ -15,9 +15,13 @@ resource "aws_s3_bucket" "standard_bucket" {
     }
   }
 
-  logging {
-    target_bucket = var.bucket_name
-    target_prefix = "log/"
+  dynamic "logging" {
+    for_each = length(keys(var.logging)) == 0 ? [] : [var.logging]
+
+    content {
+      target_bucket = logging.value.target_bucket
+      target_prefix = lookup(logging.value, "target_prefix")
+    }
   }
 }
 
@@ -29,4 +33,3 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
   ignore_public_acls      = var.ignore_public_acls
   restrict_public_buckets = var.restrict_public_buckets
 }
-
