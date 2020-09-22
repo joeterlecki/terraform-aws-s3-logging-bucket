@@ -1,6 +1,5 @@
 resource "aws_s3_bucket" "standard_bucket" {
   bucket = var.bucket_name
-  region = var.region
   acl    = var.canned_acl
   tags   = local.tags
   versioning {
